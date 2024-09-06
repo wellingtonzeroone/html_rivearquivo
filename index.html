@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rive Interativo</title>
+    <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        h1{
+            margin-bottom: 20px;
+        }
+        canvas {
+            width: 500px;
+            height: 500px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>Apredendo a importar arquivos Rive</h1>
+    <h2>Primeiro projeto</h2>
+    <canvas id="riveCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('riveCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Ajustar para alta resolução com base na densidade de pixels do dispositivo
+        const setCanvasResolution = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+        };
+
+        // Chame a função para ajustar a resolução
+        setCanvasResolution();
+
+        // Instância do Rive usando o arquivo .riv
+        const riveInstance = new rive.Rive({
+            src: 'piano.riv',  // Caminho do seu arquivo Rive
+            canvas: canvas,
+            stateMachines: 'State Machine 1',
+            autoplay: true
+        });
+
+        // Exemplo de interação ao clicar
+        canvas.addEventListener('click', () => {
+            riveInstance.play();
+        });
+
+        // Reajustar o canvas na redimensionamento da janela
+        window.addEventListener('resize', setCanvasResolution);
+    </script>
+
+</body>
+</html>
